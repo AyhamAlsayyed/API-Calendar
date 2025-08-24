@@ -56,3 +56,17 @@ class GoogleCalendar:
             .execute()
         )
         return event
+
+    def list_events(self, calendar_id="primary", max_results=10):
+        """Return a list of upcoming events."""
+        events_result = (
+            self.service.events()
+            .list(
+                calendarId=calendar_id,
+                maxResults=max_results,
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
+        )
+        return events_result.get("items", [])
