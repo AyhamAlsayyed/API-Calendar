@@ -63,7 +63,7 @@ class GoogleCalendar:
         self.service.events().delete(calendarId=calendar_id, eventId=event_id).execute()
         return True
 
-    def list_events(self, calendar_id="ayham.sayyed.04@gmail.com", max_results=10):
+    def list_events(self, calendar_id="primary", max_results=10):
         """Return a list of upcoming events."""
         now = datetime.utcnow().isoformat() + "Z"  # 'Z' means UTC
         events_result = (
