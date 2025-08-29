@@ -1,2 +1,3 @@
+# Ignore Google API credentials and token
 credentials.json
 token.pickle

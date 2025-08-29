@@ -1,6 +1,7 @@
 # GoogleCalendar.py
 import os
 import pickle
+from datetime import datetime
 
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -56,3 +57,19 @@ class GoogleCalendar:
             .execute()
         )
         return event
+
+    def list_events(self, calendar_id="primary", max_results=10):
+        """Return a list of upcoming events."""
+        now = datetime.utcnow().isoformat() + "Z"  # 'Z' means UTC
+        events_result = (
+            self.service.events()
+            .list(
+                calendarId=calendar_id,
+                timeMin=now,
+                maxResults=max_results,
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
+        )
+        return events_result.get("items", [])
