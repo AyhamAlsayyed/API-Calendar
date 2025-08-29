@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta
+# from datetime import datetime, timedelta
 
 from GoogleCalendar import GoogleCalendar
 
 gc = GoogleCalendar()
-
+"""
 # --- Add a new test event ---
 start_time = datetime.utcnow() + timedelta(hours=0)
 end_time = start_time + timedelta(hours=24)
@@ -18,11 +18,19 @@ print(f"Event ID: {new_event['id']}")
 print(f"Summary: {new_event['summary']}")
 print(f"Start: {new_event['start']['dateTime']}")
 print(f"End: {new_event['end']['dateTime']}")
-
+"""
 # --- List upcoming events ---
 max_results = int(input("how many events do you want to see?\n"))
 events = gc.list_events(max_results=max_results)
 print(f"Upcoming {max_results} Events:")
 for event in events:
     start = event["start"].get("dateTime", event["start"].get("date"))
-    print(f"- {event['summary']} at {start}")
+    print(f"- {event['summary']} at {start} - ID: {event['id']}")
+
+# --- Delete an event ---
+delete_event = input("\nEnter the Event ID you want to delete:\n")
+try:
+    gc.delete_event(delete_event)
+    print(f"Event {delete_event} deleted successfully.")
+except Exception as e:
+    print(f"An error occurred while deleting the event: {e}")
